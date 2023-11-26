@@ -27,13 +27,12 @@ module.exports = {
     //get a data
     read: async (req, res) => {
         try {
-            const tempat = await Biodata.findById(req.params.id)
+            const tempat = await Biodata.find({ lokasi: req.params.lokasi })
             res.status(200).json({
                 status: true,
                 data: tempat,
                 method: req.method,
                 url: req.url,
-                message: "Data berhasil didapat!"
             })
         } 
         catch (error) {
@@ -59,10 +58,12 @@ module.exports = {
     //put data
     update: async (req, res) => {
         try {
-            const tempat = await Biodata.findByIdAndUpdate(req.params.id, req.body, {
+            const tempat = await Biodata.updateOne({ nama: req.params.nama }, 
+                req.body, { 
                 new: true,
                 runValidators: true
-            })
+                }
+            )
             res.status(200).json({
                 status: true,
                 data: tempat,
@@ -78,7 +79,7 @@ module.exports = {
     //delete data
     delete: async (req, res) => {
         try {
-            const tempat = await Biodata.findByIdAndDelete(req.params.id)
+            const tempat = await Biodata.deleteOne({ nama: req.params.nama })
             res.status(200).json({
                 status: true,
                 method: req.method,

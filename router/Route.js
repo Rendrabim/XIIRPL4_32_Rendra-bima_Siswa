@@ -5,12 +5,12 @@ const usercontroller = require('../controller/TempatController');
 
 router.get('/tempatPkl', usercontroller.index)
 
-router.get('/data/:id', usercontroller.read)
+router.get('/data/:lokasi', usercontroller.read)
 
 router.post('/data', usercontroller.create)
 
-router.put('/data/:id', usercontroller.update)
+router.put('/data/:nama', usercontroller.update)
 
-router.delete('/data/:id', usercontroller.delete)
+router.delete('/data/:nama', usercontroller.delete)
 
 module.exports = router;
