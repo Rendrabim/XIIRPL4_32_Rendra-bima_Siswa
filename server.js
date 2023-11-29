@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const userrouter = require('./router/Route');
+const userrouter = require('./router/SiswaRoute');
 const connectDB = require('./config/db');
 
 app.use(express.json()) // for parsing application/json
@@ -17,5 +17,5 @@ app.use(userrouter)
 connectDB();
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`)
+    console.log(`Listening on port ${port}`)
 });

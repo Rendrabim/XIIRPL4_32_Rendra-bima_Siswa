@@ -1,14 +1,13 @@
-const Biodata = require('../models/TempatPKL-Schema')
+const DataSiswa = require('../models/SiswaModel')
 
 module.exports = {
-    //get all data
-    index: async (req, res) => {
+    home: async (req, res) => {
         try{
-            const tempat = await Biodata.find()
-            if (tempat.length > 0) {
+            const siswa = await DataSiswa.find()
+            if (siswa.length > 0) {
             res.status(200).json({
                 status: true,
-                data: tempat,
+                data: siswa,
                 method: req.method,
                 url: req.url
                 })
@@ -16,7 +15,7 @@ module.exports = {
             else {
                 res.json({
                     status: false,
-                    message: "Data masih kosong"
+                    message: "Tidak ada siswa terdaftar!"
                 })
             }
         }
@@ -24,68 +23,63 @@ module.exports = {
             res.status(400).json({success: false})
         }
     },
-    //get a data
-    read: async (req, res) => {
+    show: async (req, res) => {
         try {
-            const tempat = await Biodata.find({ lokasi: req.params.lokasi })
+            const siswa = await DataSiswa.findById(req.params.id)
             res.status(200).json({
                 status: true,
-                data: tempat,
+                data: siswa,
                 method: req.method,
                 url: req.url,
+                message: "Siswa berhasil ditemukan!"
             })
         } 
         catch (error) {
             res.status(400).json({success: false})
         }
     },
-    //post data
-    create: async (req, res) => {
+    store: async (req, res) => {
         try {
-            const tempat = await Biodata.create(req.body)
+            const siswa = await DataSiswa.create(req.body)
             res.status(200).json({
                 status: true,
-                data: tempat,
+                data: siswa,
                 method: req.method,
                 url: req.url,
-                message: "Data berhasil ditambahkan!"
+                message: "Siswa berhasil ditambahkan!"
             })
         } 
         catch (error) {
             res.status(400).json({success: false})
         }
     },
-    //put data
     update: async (req, res) => {
         try {
-            const tempat = await Biodata.updateOne({ nama: req.params.nama }, 
-                req.body, { 
+            const siswa = await DataSiswa.findByIdAndUpdate(req.params.id, req.body, {
                 new: true,
                 runValidators: true
-                }
-            )
+            })
             res.status(200).json({
                 status: true,
-                data: tempat,
+                data: siswa,
                 method: req.method,
                 url: req.url,
-                message: "Data berhasil diubah!"
+                message: "Keterangan Siswa berhasil diubah!"
             })
         } 
         catch (error) {
             res.status(400).json({success: false})
         }
     },
-    //delete data
     delete: async (req, res) => {
         try {
-            const tempat = await Biodata.deleteOne({ nama: req.params.nama })
+            const siswa = await DataSiswa.findByIdAndDelete(req.params.id)
             res.status(200).json({
                 status: true,
                 method: req.method,
-                data: tempat,
+                data: siswa,
                 url: req.url,
-                message: "Data berhasil dihapus!"
+                message: "Siswa berhasil dihapus!"
             })
         } 
         catch (error) {
